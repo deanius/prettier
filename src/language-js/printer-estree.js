@@ -6303,6 +6303,16 @@ function isTestCall(n, parent) {
   if (n.type !== "CallExpression") {
     return false;
   }
+  // RxHelper/Antares should wrap less.
+  if (
+    (n.callee.object && n.callee.object.name) === "agent" &&
+    (n.callee.property &&
+      ["on", "filter", "addFilter", "addRenderer"].includes(
+        n.callee.property.name
+      ))
+  ) {
+    return true;
+  }
   if (n.arguments.length === 1) {
     if (isAngularTestWrapper(n) && parent && isTestCall(parent)) {
       return isFunctionOrArrowExpression(n.arguments[0]);

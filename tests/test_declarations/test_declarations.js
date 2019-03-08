@@ -128,3 +128,13 @@ it(
   () => new Promise(resolve => setTimeout(resolve, 10)),
   250
 );
+
+agent.on("foo", ({ action }) => {
+  console.log("foo");
+}, { type: "foo" });
+
+agent.on("foo", ({ action }) => {
+  console.log("foo");
+}, { type: "foo", processResults: true, anotherParameter: false, wrapThisConfig: true });
+
+agent.process({type: "foo", payload: { ba: 'baa', meow: 'meoooooooooooowwwwwooowwooooooowwwwwww' }})
